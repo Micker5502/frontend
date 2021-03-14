@@ -1,5 +1,6 @@
 <template>
   <div>
+    <AppBar/>
     <v-row no-gutters>
       <v-col> </v-col>
 
@@ -15,14 +16,14 @@
   </div>
 </template>
 <script lang="ts">
-//import AppBar from "@/components/AppBar.vue";
+import AppBar from "@/components/AppBar.vue";
 //import NavBar from "@/components/NavBar.vue";
 import { OpenIdConnectService } from "@/services/auth/openIdConnectService";
 import { Vue, Component, Inject } from "vue-property-decorator";
 
 @Component({
   components: {
-    //AppBar,
+    AppBar,
     //NavBar
   }
 })

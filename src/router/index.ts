@@ -11,15 +11,15 @@ Vue.use(VueRouter)
     name: 'Home',
     component: Home
   },
-  {
+  /*{
     path: '/about',
     name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import( webpackChunkName: "about"  '../views/About.vue')
   },
   {
     path: '/Profile',
     name: 'Profile',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Profile.vue'),
+    component: () => import(/* webpackChunkName: "about"  '../views/Profile.vue'),
     children: [
       {
         path: '',
@@ -37,7 +37,7 @@ Vue.use(VueRouter)
     meta:{
       layout:'redirect'
     },
-    component: () => import(/* webpackChunkName: "about" */ '../views/CallBack.vue')
+    component: () => import(/* webpackChunkName: "about"  '../views/CallBack.vue')
   },
   {
     path: '/Account/SilentRenew',
@@ -45,7 +45,7 @@ Vue.use(VueRouter)
     meta:{
       layout:'redirect'
     },
-    component: () => import(/* webpackChunkName: "about" */ '../views/SilentRenew.vue')
+    component: () => import(/* webpackChunkName: "about"  '../views/SilentRenew.vue')
   },
   {
     path: '/Account/SignInCheck',
@@ -53,8 +53,8 @@ Vue.use(VueRouter)
     meta:{
       layout:'redirect'
     },
-    component: () => import(/* webpackChunkName: "about" */ '../views/SignInCheck.vue')
-  }
+    component: () => import(/* webpackChunkName: "about"  '../views/SignInCheck.vue')
+  }*/
 ]
 
 const router = new VueRouter({

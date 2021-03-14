@@ -1,18 +1,27 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+
+  <div>
+
+
+    
   </div>
 </template>
 
-<script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+<script lang="ts">
 
-export default {
-  name: "Home",
-  components: {
-    HelloWorld
-  }
-};
+import {OpenIdConnectService} from "../services/auth/openIdConnectService";
+import {Vue,Component,Inject  } from 'vue-property-decorator' ;
+
+@Component(
+  {
+      components:
+      {
+          
+      }
+  })
+export default class Home extends Vue {
+   @Inject() private oidc!: OpenIdConnectService;
+
+    
+}
 </script>
