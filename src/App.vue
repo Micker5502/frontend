@@ -1,6 +1,5 @@
 <template>
   <v-app>
-
     <component :is="layout">
       <router-view />
     </component>
@@ -19,9 +18,7 @@ export default class App extends Vue {
   default_layout = "default";
 
   get layout() {
-    //return (this.$route.meta.layout || this.default_layout) + "-layout";
-    console.log((this.$route.meta.layout || this.default_layout) + "-layout");
-    return this.default_layout + "-layout";
+    return (this.$route.meta.layout || this.default_layout) + "-layout";
   }
 }
 </script>

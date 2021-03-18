@@ -160,13 +160,10 @@ export default class AppBar extends Vue {
 
   public mounted() {
     this.oidc.getUser().then(user => {
+      console.log("gg"+user);
       this.isLogin = user !== null;
-      console.log(user);
+      
     });
-  }
-
-  private check() {
-    console.log(this.$vuetify.breakpoint.smOnly);
   }
 }
 </script>

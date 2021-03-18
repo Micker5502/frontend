@@ -26,8 +26,8 @@ class UserModule extends VuexModule{
     {
         const user: User = {
             userName: account.content.userName,
-            email: account.content.email,
             nickName: account.content.nickName,
+            email: account.content.email,
         }
 
         return user

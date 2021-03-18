@@ -1,5 +1,7 @@
 import { UserManager, User } from 'oidc-client';
+import { User as Usermodel } from '@/store/model/users'
 import { openIdConnectSettings } from './applicationUserManager';
+import { userModule } from '@/store'
 
 export class OpenIdConnectService{    
 
@@ -25,6 +27,12 @@ export class OpenIdConnectService{
             if (user) {
                 
                 this.currentUser = user;
+                /*const acc: Usermodel = {
+                    userName: user.profile.name,
+                    nickName: user.profile.nickName,
+                    email: user.profile.email,
+                }
+                userModule.setUser(acc);*/
 
             } else {
                 this.currentUser = null; 
@@ -37,7 +45,7 @@ export class OpenIdConnectService{
         // 在建立（或重新建立）用户会话时引发
         this.userManager.events.addUserLoaded((user) => {
             this.currentUser = user;
-            console.log("reload");
+            //console.log("reload");
         });
 
         
@@ -64,13 +72,11 @@ export class OpenIdConnectService{
     public async triggerSignIn() {
         
         await this.userManager.signinRedirect();
-        console.log('triggerSignIn');
     }
 
     // 登录回调
     public async handleCallback() {
         const user: User = await this.userManager.signinRedirectCallback();
-        console.log('handleCallback');
 
     }
 
@@ -78,12 +84,10 @@ export class OpenIdConnectService{
     public async handleSilentCallback() {
         //await this.userManager.revokeAccessToken();
         const user: any = await this.userManager.signinSilentCallback();
-        console.log('handleSilentCallback');
     }
 
     // 触发登出
     public async triggerSignOut() {
-        console.log('triggerSignOut');
         await this.userManager.revokeAccessToken();
         await this.userManager.signoutRedirect();
         
