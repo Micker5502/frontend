@@ -3,21 +3,29 @@ import Vuex from 'vuex'
 import user from '@/store/modules/user'
 import { getModule } from 'vuex-module-decorators';
 import createPersistedState from 'vuex-persistedstate';
+import themeConfig from '@/store/modules/themeConfig'
 
 Vue.use(Vuex)
 const store =new Vuex.Store({
   state: {
-    count: 0
+    count: 0,
+    darkmode: false
+  },
+  getters:{
+    getDarkMode: state =>{
+      return state.darkmode;
+    }
   },
   mutations: {
-    setUserNames(state){
-      state.count++
+    setDarkMode(state){
+      state.darkmode = !state.darkmode
     }
   },
   actions: {
   },
   modules: {
-    user
+    user,
+    themeConfig
   },
   plugins: [
     createPersistedState({
@@ -30,5 +38,5 @@ const store =new Vuex.Store({
 
 export default store
 
-//export const test2Module = getModule(test2,store);
+export const themeConfigModule = getModule(themeConfig,store);
 export const userModule = getModule(user,store);

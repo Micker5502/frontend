@@ -17,6 +17,11 @@ Vue.use(VueRouter)
     component: () => import(   '../views/About.vue')
   },
   {
+    path: '/Test/UploadPicture',
+    name: 'UploadPicture',
+    component: () => import(   '../views/UploadPictureTesting.vue')
+  },
+  {
     path: '/Account/CallBack',
     name: 'CallBack',
     meta:{

@@ -18,7 +18,13 @@ export default class App extends Vue {
   default_layout = "default";
 
   get layout() {
+    console.log(this.$vuetify.theme.themes.light);
     return (this.$route.meta.layout || this.default_layout) + "-layout";
+  }
+
+  private mounted()
+  {
+    this.$vuetify.theme.dark = this.$store.state.darkmode;
   }
 }
 </script>

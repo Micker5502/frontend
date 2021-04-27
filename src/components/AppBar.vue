@@ -36,10 +36,20 @@
             <v-list-item-title>About</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item>
+            <v-list-item-action>
+            <v-switch
+              v-model="darkmode"
+              inset
+              label="Theme Dark"
+              @click="themeServ.setDarkMode()"
+            ></v-switch>
+            </v-list-item-action>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar color="deep-purple accent-4" dark app clipped-left>
+    <v-app-bar  app clipped-left>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <router-link to="/"
         ><v-img
@@ -66,7 +76,7 @@
           <v-icon atl="Page">mdi-file-document-outline</v-icon>
         </v-tab>
         <v-divider class="mx-4" vertical></v-divider>
-        <v-tab to="/Profile">
+        <v-tab to="/Test/UploadPicture">
           <v-icon atl="Page">mdi-file-document-outline</v-icon>
         </v-tab>
         <v-divider class="mx-4" vertical></v-divider>
@@ -109,34 +119,35 @@
       </v-menu>
     </v-app-bar>
   </div>
-  <!-- <button v-if="!isLogin" @click='Login()'>Login</button>
-        <button v-else @click='Logout()'>Logout</button> -->
 </template>
 
 <script lang="ts">
 import { OpenIdConnectService } from "@/services/auth/openIdConnectService";
 import { Component, Inject, Vue, Watch } from "vue-property-decorator";
+import { VuetifyThemeService } from "@/services/vuetifyThemeService/vuetifyThemeService";
 
 @Component
 export default class AppBar extends Vue {
   @Inject() private oidc!: OpenIdConnectService;
+  private themeServ: VuetifyThemeService = new VuetifyThemeService();
   private isLogin = false;
   private user = this.oidc.getUser();
   private drawer = true;
+  private darkmode = this.themeServ.getDarkMode;
 
   @Watch("drawer")
   nameChanged(newVal: boolean) {
     this.drawer = newVal;
   }
 
-  get User() {
-    return this.user;
+  @Watch("darkmode")
+  darkModeChanged(newVal: boolean)
+  {
+    this.$vuetify.theme.dark = newVal;
   }
 
-  get BreakpointSM() {
-    console.log(!this.$vuetify.breakpoint.smOnly);
-
-    return !this.$vuetify.breakpoint.smAndDown;
+  get User() {
+    return this.user;
   }
 
   get BreakPointSmDown() {
@@ -144,23 +155,31 @@ export default class AppBar extends Vue {
   }
 
   private async Login() {
-    console.log("Login");
     await this.oidc.triggerSignIn();
   }
   private async Logout() {
-    console.log("Logout");
     await this.oidc.triggerSignOut();
   }
 
   private Register() {
-    console.log("Register");
     window.location.href = "https://localhost:5001/Account/Register";
     this.oidc.triggerSignOut();
   }
+  private SetDarkMode()
+  {
+    this.$store.commit("setDarkMode");
+    this.$vuetify.theme.dark = this.$store.state.darkmode;
+  }
+  private GetDarkMode()
+  {
+    console.log(this.$store.state.darkmode);
+    this.$vuetify.theme.dark = this.$store.state.darkmode;
+    return this.$store.state.darkmode;
+  }
+  
 
   public mounted() {
     this.oidc.getUser().then(user => {
-      console.log("gg"+user);
       this.isLogin = user !== null;
       
     });

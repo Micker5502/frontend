@@ -9,6 +9,7 @@ module.exports = {
     "@vue/typescript/recommended",
   ],
   parser: "vue-eslint-parser",
+  
   parserOptions: {
     ecmaFeatures: {
       legacyDecorators: true
@@ -17,6 +18,9 @@ module.exports = {
   }, 
   rules: {
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
-    "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off"
+    "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
+    camelcase: 'off',
+    '@typescript-eslint/camelcase': 0,
+    "@typescript-eslint/no-explicit-any": ["off"]
   }
 };
