@@ -10,5 +10,6 @@ declare module 'vue/types/vue' {
     $router: VueRouter;
     $route: Route;
     $oidc: OpenIdConnectService;
+    $signalr: signalR;
   }
 }

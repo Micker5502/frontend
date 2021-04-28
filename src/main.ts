@@ -27,7 +27,7 @@ Vue.config.productionTip = false;
 Vue.prototype.$https = service;
 Vue.prototype.$urls  = urls;
 Vue.prototype.$oidc  = OpenIdConnectService.getInstance();
-//Vue.prototype.$signal = signal;
+Vue.prototype.$signalr = signal;
 
 new Vue({
   vuetify : new Vuetify({

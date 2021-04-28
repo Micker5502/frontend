@@ -92,6 +92,26 @@ export default class Home extends Vue {
         
       ]
     }]
+
+    mounted()
+  {
+     const signalr = this.$signalr.withUrl('https://localhost:5002/chathub',{ accessTokenFactory: async  () => await this.$oidc.getUser().then((res)=> "" +res?.access_token),transport: 4,withCredentials: true})
+                  .build();
+    //const signalr = this.$signalr.withUrl('https://localhost:5002/chathub',{}).build();
+                 
     
+    signalr.start().then(() => {
+      
+        console.log('连接');
+        signalr.on('ReceiveMessage',(res: any,res2: any)=>{
+          console.log(res+res2);
+        });
+        signalr.invoke('SendMessage',"asd","asd")
+ 
+    });
+    
+    
+    
+  }
 }
 </script>

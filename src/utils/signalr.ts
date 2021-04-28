@@ -1,7 +1,5 @@
-import signalR from "@aspnet/signalr";
+import * as signalR from '@microsoft/signalr'
 
-const signal = new signalR.HubConnectionBuilder()
-    .withUrl('http://localhost:52970/lchub/signalr', {})
-    .build();
-    
+const signal = new signalR.HubConnectionBuilder().configureLogging(signalR.LogLevel.None);
+
 export default signal;
