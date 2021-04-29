@@ -1,4 +1,4 @@
-import { UserManager, User } from 'oidc-client';
+import { UserManager, User,SessionStatus } from 'oidc-client';
 import { User as Usermodel } from '@/store/model/users'
 import { openIdConnectSettings } from './applicationUserManager';
 import { userModule } from '@/store'
@@ -67,7 +67,6 @@ export class OpenIdConnectService{
         
         return this.userManager.getUser();
     }
-
     // 触发登录
     public async triggerSignIn() {
         
@@ -82,7 +81,8 @@ export class OpenIdConnectService{
 
     // 自动刷新回调
     public async handleSilentCallback() {
-        //await this.userManager.revokeAccessToken();
+        console.log("gg");
+        this.userManager.clearStaleState();
         const user: any = await this.userManager.signinSilentCallback();
     }
 

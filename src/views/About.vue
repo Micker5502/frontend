@@ -18,13 +18,18 @@ export default class About extends Vue {
 
     private async TestApiConnect()
     {
-      console.log(this.oidc.user.token_type + " " +this.oidc.user.access_token);
-        this.$https.defaults.headers.common['Authorization'] =  this.$oidc.user.token_type + " " + this.$oidc.user.access_token;
+      
+      this.$oidc.getUser().then(async (user: any)=>{
+
+        console.log(user.token_type + " " +user.access_token);
+        this.$https.defaults.headers.common['Authorization'] =  user.token_type + " " + user.access_token;
         const res: unknown = await this.$https.post(
         this.$urls.version+ this.$urls.testApiConnect);
-        console.log(this.$oidc.user.profile.UserName);
+        console.log(user.profile.UserName);
         //this.$urls.version+ this.$urls.test);
         console.log(res);
+      })
+      
     }
   
 }

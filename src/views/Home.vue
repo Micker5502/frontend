@@ -93,7 +93,7 @@ export default class Home extends Vue {
       ]
     }]
 
-    mounted()
+  mounted()
   {
      const signalr = this.$signalr.withUrl('https://localhost:5002/chathub',{ accessTokenFactory: async  () => await this.$oidc.getUser().then((res)=> "" +res?.access_token),transport: 4,withCredentials: true})
                   .build();

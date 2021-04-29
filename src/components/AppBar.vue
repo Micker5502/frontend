@@ -132,13 +132,14 @@ export default class AppBar extends Vue {
   private themeServ: VuetifyThemeService = new VuetifyThemeService();
   private isLogin = false;
   private user = this.oidc.getUser();
-  private drawer = true;
+  private drawer = false;
   private darkmode = this.themeServ.getDarkMode;
 
-  @Watch("drawer")
-  nameChanged(newVal: boolean) {
-    this.drawer = newVal;
-  }
+  // @Watch("drawer")
+  // nameChanged(newVal: boolean) {
+  //   this.drawer = newVal;
+    
+  // }
 
   @Watch("darkmode")
   darkModeChanged(newVal: boolean)
@@ -179,10 +180,18 @@ export default class AppBar extends Vue {
   
 
   public mounted() {
-    this.oidc.getUser().then(user => {
-      this.isLogin = user !== null;
-      
-    });
+    this.$oidc.getUser().then(()=>{
+      this.isLogin = this.$oidc.userAvailable;
+    })
+    
+
+    switch (this.$vuetify.breakpoint.name) {
+          case 'xs': this.drawer =  false; break;
+          case 'sm': this.drawer = false; break;
+          case 'md': this.drawer = true; break;
+          case 'lg': this.drawer = true; break;
+          case 'xl': this.drawer = true; break;
+    }
   }
 }
 </script>

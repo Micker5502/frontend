@@ -1,7 +1,7 @@
 // url的链接
 export const urls: object = {
     version: "v1",
-    testApiConnect: "/Test/TestApiConnect",
+    testApiConnect: "/Test/TestConnect",
     getArticleList: "getArticleList",
     updateAccountDetail:"/Account/UpdateAccountDetail",
     getAccount:"/Account/GetAccount",
