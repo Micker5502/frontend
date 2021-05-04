@@ -72,6 +72,8 @@
 import {OpenIdConnectService} from "@/services/auth/openIdConnectService";
 import {Vue,Component,Inject,Emit  } from 'vue-property-decorator' ;
 import { CircleStencil ,Preview } from 'vue-advanced-cropper';
+import {UploadPictureModel} from '@/store/model/uploadPictureModel';
+import { serialize } from 'object-to-formdata';
 
 @Component(
   {
@@ -84,7 +86,7 @@ import { CircleStencil ,Preview } from 'vue-advanced-cropper';
 export default class UploadPicture extends Vue {
    //<v-img :src="file"/>
     @Inject() private oidc!: OpenIdConnectService;
-    private file: File| null = null;
+    private file: any| null = null;
     private image: any| null = null;
     private pictureAvailble = false;
     private pictureSize = 100;
@@ -125,12 +127,16 @@ export default class UploadPicture extends Vue {
     
     fileImage(file: any)
     {
+
         this.pictureAvailble = true;
         const reader = new FileReader();
+        reader.readAsDataURL(file);
         reader.onload = e => {
             this.image = e.target?.result;
+            this.file = file;
+
         };
-        reader.readAsDataURL(file);
+        
 
     }
   
@@ -140,19 +146,46 @@ export default class UploadPicture extends Vue {
     private async TestUploadPicture(event: any)
     {
         console.log("Start Upload!");
-        console.log(event);
-        this.file = event.image;
+        let image: Blob;
+        this.$https.defaults.headers.common['Authorization'] =  this.$oidc.user.token_type + " " + this.$oidc.user.access_token;
+        this.$https.defaults.headers['Content-Type'] = 'multipart/formdata';
+
+        const formData = new FormData();
         
-        
-        //this.$https.defaults.headers.common['Authorization'] =  this.$oidc.user.token_type + " " + this.$oidc.user.access_token;
-        //const formData = new FormData();
+        await this.result.canvas.toBlob(async (blob: Blob)=>{
+            const files: UploadPictureModel = {
+                files:[{
+                    description: "gg"
+                },{
+                    description: "gg2"
+                }]
+            }
+            const formData = serialize(files, { indices: true })
+            // Object.entries(files).forEach(([key, value]) => {
+            //     if (typeof(value) === 'object') {
+            //         value = new Blob([JSON.stringify(value)], {type : 'application/json'});// or just JSON.stringify(value)
+            //     }
+            //     formData.append(key, value);
+            // }); 
+
+            image = blob;
+            //formData.append('files[][description]',"gg")
+            //formData.append('files[][description]',"gg")
+            //formData.append('fuck[][description]',"gg")
+
+            // formData.append('image',image);
+            // formData.append('image',image);
+            // formData.append('image',image);
+            // formData.append('image',image);
+
+            const res: unknown = await this.$https.post(this.$urls.version+ this.$urls.testUploadPicture,formData);
+        });
+
         //formData.append('files',this.file);
-        //formData.append('test',"test");
-        
-        //const res: unknown = await this.$https.post(this.$urls.version+ this.$urls.testUploadPicture,formData);
         
         
-        //console.log(res);
+        
+        
     }
 
 }
